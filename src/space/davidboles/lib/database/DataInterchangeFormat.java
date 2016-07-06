@@ -18,7 +18,7 @@ public final class DataInterchangeFormat implements Serializable {
 		this.formatClass = formatClass;
 		this.formatStructure = formatStructure;
 	}
-	
+	//TODO Remove un-needed synchronization
 	/**
 	 * Checks if the argument provided is equivalent to this. The format Classes must .equal each other, the format structures must have the same length, and the internal Strings must .equal each other. (method calls this.equals(object))
 	 * @param format The format being tested against this.
