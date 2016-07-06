@@ -40,6 +40,7 @@ public abstract class BaseWAD<T> implements ArbitraryDataWrapperInterface {
 	 */
 	abstract DataInterchangeFormat[] getSupportedFormats();
 	
+	//TODO Documentation
 	/**
 	 * Convert the data provided into the format requested.
 	 * @param format
