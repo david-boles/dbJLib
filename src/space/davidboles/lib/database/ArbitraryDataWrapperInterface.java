@@ -2,6 +2,7 @@ package space.davidboles.lib.database;
 
 import java.io.Serializable;
 
+import space.davidboles.lib.database.exceptions.OperationFailedException;
 import space.davidboles.lib.database.exceptions.UnsupportedFormatException;
 
 /**
@@ -18,15 +19,15 @@ public interface ArbitraryDataWrapperInterface extends Serializable {
 	 * @return True if it won't be thrown, false otherwise.
 	 */
 	public boolean formatGetSupported(DataInterchangeFormat format);
-	//TODO Add throws declaration
+	
 	/**
 	 * Calls the full getData method with null info.
 	 * @param format The format requested for the returned data.
-	 * @return The data formatted as requested.
+	 * @return The data formatted as requested or a child format.
 	 * @throws UnsupportedFormatException Thrown if the format was not supported.
 	 * @throws OperationFailedException Thrown if the operation failed for another reason.
 	 */
-	public default Object getData(DataInterchangeFormat format) {
+	public default Object getData(DataInterchangeFormat format) throws UnsupportedFormatException, OperationFailedException {
 		return this.getData(format, null);
 	}
 	
@@ -34,11 +35,11 @@ public interface ArbitraryDataWrapperInterface extends Serializable {
 	 * Gets and formats the data as requested.
 	 * @param format The format requested for the returned data.
 	 * @param info Any additional information as specified by the documentation of the format or the data wrapper, null or empty for none.
-	 * @return The data formatted as requested.
+	 * @return The data formatted as requested or a child format.
 	 * @throws UnsupportedFormatException Thrown if the format was not supported.
 	 * @throws OperationFailedException Thrown if the operation failed for another reason.
 	 */
-	public Object getData(DataInterchangeFormat format, KeyObjectPair[] info);
+	public Object getData(DataInterchangeFormat format, KeyObjectPair[] info) throws UnsupportedFormatException, OperationFailedException;
 	
 	
 	//Data set methods
@@ -58,7 +59,7 @@ public interface ArbitraryDataWrapperInterface extends Serializable {
 	 * @throws UnsupportedFormatException Thrown if the format was not supported.
 	 * @throws OperationFailedException Thrown if the operation failed for another reason.
 	 */
-	public default void setData(DataInterchangeFormat format, Object data) {
+	public default void setData(DataInterchangeFormat format, Object data) throws UnsupportedFormatException, OperationFailedException {
 		this.setData(format, data, null);
 	}
 	
@@ -70,6 +71,6 @@ public interface ArbitraryDataWrapperInterface extends Serializable {
 	 * @throws UnsupportedFormatException Thrown if the format was not supported.
 	 * @throws OperationFailedException Thrown if the operation failed for another reason.
 	 */
-	public void setData(DataInterchangeFormat format, Object data, KeyObjectPair[] info);
+	public void setData(DataInterchangeFormat format, Object data, KeyObjectPair[] info) throws UnsupportedFormatException, OperationFailedException;
 	
 }
