@@ -1,5 +1,7 @@
 package space.davidboles.lib.database;
 
+import space.davidboles.lib.database.exceptions.UnsupportedFormatException;
+
 public abstract class BaseWAD<T> implements ArbitraryDataWrapperInterface {
 
 	private static final long serialVersionUID = 1L;
@@ -26,21 +28,32 @@ public abstract class BaseWAD<T> implements ArbitraryDataWrapperInterface {
 	}
 
 	@Override
-	public synchronized Object getData(DataInterchangeFormat format, KeyObjectPair[] info) {
-		// TODO Auto-generated method stub
-		return null;
+	public synchronized Object getData(DataInterchangeFormat format, KeyObjectPair[] info) throws UnsupportedFormatException {
+		if(this.formatGetSupported(format)) {
+			return this.convertToFormat(this.data, format);
+		}else throw new UnsupportedFormatException();
 	}
 
 	@Override
 	public synchronized boolean formatSetSupported(DataInterchangeFormat format) {
-		// TODO Auto-generated method stub
-		return false;
+		DataInterchangeFormat[] supportedFs = this.getSupportedFormats();
+		
+		boolean fSupported = false;
+		for(int i = 0; i < supportedFs.length; i++) {
+			if(format.isParentTo(supportedFs[i])) {
+				fSupported = true;
+				i = supportedFs.length;
+			}
+		}
+		
+		return fSupported;
 	}
 
 	@Override
-	public synchronized void setData(DataInterchangeFormat format, Object data, KeyObjectPair[] info) {
-		// TODO Auto-generated method stub
-		
+	public synchronized void setData(DataInterchangeFormat format, Object data, KeyObjectPair[] info) throws UnsupportedFormatException {
+		if(this.formatSetSupported(format)) {
+			this.data = this.convertFromFormat(format, data);
+		}else throw new UnsupportedFormatException();
 	}
 	
 	/**
