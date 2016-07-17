@@ -1,4 +1,4 @@
-package space.davidboles.lib.database;
+package space.davidboles.jlib.database;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package space.davidboles.lib.database;
+package space.davidboles.jlib.database;
 
 import space.davidboles.lib.database.exceptions.UnsupportedFormatException;
 

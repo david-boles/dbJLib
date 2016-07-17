@@ -1,4 +1,4 @@
-package space.davidboles.lib.database;
+package space.davidboles.jlib.database;
 
 /**
  * A KayObjectPair provides a simple way to assign a String identifier to an Object.
